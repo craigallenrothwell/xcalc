@@ -761,13 +761,12 @@ void
 offf(void)
 {
   /* full reset */
-  int i;
   ResetCalc();
   entered=clrdisp=1;
   lift_enabled = 0;
   dnum=mem[0]=0.0;
   if (rpn)
-      for (i=1; i < XCALC_MEMORY; i++)
+      for (int i=1; i < XCALC_MEMORY; i++)
 	  mem[i]=0.0;
   exponent=Dpoint=0;
   DrawDisplay();
