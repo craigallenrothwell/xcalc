@@ -210,12 +210,13 @@ DrawDisplay(void)
 void
 numeric(int keynum)
 {
-    char	st[2];
-    int		cell = 0;
+  char st[2];
 
   flagINV=0;
 
   if (rpn && (memop == kSTO || memop == kRCL || memop == kSUM)) {
+      int cell = 0;
+
       switch (keynum) {
 	case kONE:	cell = 1; break;
 	case kTWO:	cell = 2; break;
