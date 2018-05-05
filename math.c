@@ -267,7 +267,7 @@ numeric(int keynum)
   if ((int) strlen(dispstr) >= MAXDISP)
     return;
 
-    switch (keynum){
+  switch (keynum){
       case kONE:	st[0] = '1'; break;
       case kTWO:	st[0] = '2'; break;
       case kTHREE:	st[0] = '3'; break;
@@ -278,9 +278,9 @@ numeric(int keynum)
       case kEIGHT:	st[0] = '8'; break;
       case kNINE:	st[0] = '9'; break;
       case kZERO:	st[0] = '0'; break;
-    }
-    st[1] = '\0';
-    strcat(dispstr,st);
+  }
+  st[1] = '\0';
+  strcat(dispstr,st);
 
   DrawDisplay();
   if (clrdisp && keynum != kZERO)
