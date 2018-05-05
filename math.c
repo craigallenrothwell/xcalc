@@ -704,15 +704,15 @@ oneop(int keynum)
   case kE:     if (rpn && memop != kENTR) PushNum(dnum); dnum=M_E;  break;
   case kPI:    if (rpn && memop != kENTR) PushNum(dnum); dnum=M_PI;  break;
   case kRECIP: dnum=1.0/dnum;  break;
-  case kSQR:   flagINV = !flagINV; /* fall through to */
+  case kSQR:   flagINV = !flagINV; /* fall through */
   case kSQRT:  if (flagINV) dnum=dnum*dnum;
 	       else dnum=sqrt(dnum);
 	       break;
-  case k10X:   flagINV = !flagINV; /* fall through to */
+  case k10X:   flagINV = !flagINV; /* fall through */
   case kLOG:   if (flagINV) dnum=pow(10.0,dnum);
   	       else dnum=log10(dnum);
 	       break;
-  case kEXP:   flagINV = !flagINV; /* fall through to */
+  case kEXP:   flagINV = !flagINV; /* fall through */
   case kLN:    if (flagINV) dnum=exp(dnum);
 	       else dnum=log(dnum);
 	       break;
