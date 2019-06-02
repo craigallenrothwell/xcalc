@@ -312,14 +312,12 @@ void Quit(void)
  */
 static void Syntax(int argc, char **argv)
 {
-    register int i;
-
     (void) fprintf(stderr, "%s: unknown options:", argv[0]);
-    for (i=1; i <argc; i++)
+    for (int i = 1; i <argc; i++)
 	(void) fprintf(stderr, " %s", argv[i]);
     (void) fprintf(stderr, "\n\n");
     (void) fprintf(stderr, "Usage:  %s", argv[0]);
-    for (i=0; i < XtNumber(Options); i++)
+    for (Cardinal i = 0; i < XtNumber(Options); i++)
 	(void) fprintf(stderr, " [%s]", Options[i].option);
     (void) fprintf(stderr, "\n");
     XtDestroyApplicationContext(xtcontext);
