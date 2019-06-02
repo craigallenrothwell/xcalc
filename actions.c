@@ -411,7 +411,8 @@ static void power(Widget w, XEvent *ev, String *vector, Cardinal *count)
 /*ARGSUSED*/
 static void quit(Widget w, XEvent *ev, String *vector, Cardinal *count)
 {
-    if (ev->type == ClientMessage && ev->xclient.data.l[0] != wm_delete_window)
+    if (ev->type == ClientMessage &&
+        ((Atom) ev->xclient.data.l[0]) != wm_delete_window)
 	ringbell();
     else
 	Quit();
