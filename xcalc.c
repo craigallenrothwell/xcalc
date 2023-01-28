@@ -88,13 +88,15 @@ static unsigned char check_bits[] = {
 /*	command line options specific to the application */
 static XrmOptionDescRec Options[] = {
 {"-rpn",	"rpn",		XrmoptionNoArg,		(XtPointer)"on"},
-{"-stipple",	"stipple",	XrmoptionNoArg,		(XtPointer)"on"}
+{"-stipple",	"stipple",	XrmoptionNoArg,		(XtPointer)"on"},
+{"-version",	"version",	XrmoptionNoArg,		(XtPointer)"on"}
 };
 
 /*	resources specific to the application */
 static struct resources {
     Boolean	rpn;		/* reverse polish notation (HP mode) */
     Boolean	stipple;	/* background stipple */
+    Boolean	version;	/* print version */
     Cursor	cursor;
 } appResources;
 
@@ -104,6 +106,8 @@ static XtResource Resources[] = {
      offset(rpn),	XtRImmediate,	(XtPointer) False},
 {"stipple",	"Stipple",	XtRBoolean,	sizeof(Boolean),
      offset(stipple),	XtRImmediate,	(XtPointer) False},
+{"version",	"Version",	XtRBoolean,	sizeof(Boolean),
+     offset(version),	XtRImmediate,	(XtPointer) False},
 {"cursor",	"Cursor",	XtRCursor,	sizeof(Cursor),
      offset(cursor),	XtRCursor,	(XtPointer)NULL}
 };
@@ -126,6 +130,12 @@ main(int argc, char **argv)
 
     XtGetApplicationResources(toplevel, (XtPointer)&appResources, Resources,
 			      XtNumber(Resources), (ArgList) NULL, ZERO);
+
+    if (appResources.version)
+    {
+        puts(PACKAGE_STRING);
+        exit(0);
+    }
 
     create_calculator(toplevel);
 

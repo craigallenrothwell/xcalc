@@ -65,6 +65,9 @@ displays improves the appearance.
 This option indicates that Reverse Polish Notation should be used.  In this
 mode the calculator will look and behave like an HP-10C.  Without this flag,
 it will emulate a TI-30.
+.TP 8
+.B \-version
+This option indicates that \fIxcalc\fP should print its version and exit.
 .SH OPERATION
 .PP
 .I Pointer Usage:
