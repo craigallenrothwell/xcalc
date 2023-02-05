@@ -120,9 +120,12 @@ main(int argc, char **argv)
     /* Handle args that don't require opening a display */
     for (int n = 1; n < argc; n++) {
 	const char *argn = argv[n];
-	/* accept single or double dash for -version */
+	/* accept single or double dash for -help & -version */
 	if (argn[0] == '-' && argn[1] == '-') {
 	    argn++;
+	}
+	if (strcmp(argn, "-help") == 0) {
+            Syntax(1, argv);
 	}
 	if (strcmp(argn, "-version") == 0) {
 	    puts(PACKAGE_STRING);
@@ -325,17 +328,21 @@ void Quit(void)
  */
 static void Syntax(int argc, char **argv)
 {
-    fprintf(stderr, "%s: unknown options:", argv[0]);
-    for (int i = 1; i <argc; i++)
-	fprintf(stderr, " %s", argv[i]);
-    fprintf(stderr, "\n\n");
+    if (argc > 1) {
+        fprintf(stderr, "%s: unknown options:", argv[0]);
+        for (int i = 1; i <argc; i++)
+            fprintf(stderr, " %s", argv[i]);
+        fprintf(stderr, "\n\n");
+    }
     fprintf(stderr, "Usage:  %s", argv[0]);
     for (Cardinal i = 0; i < XtNumber(Options); i++)
 	fprintf(stderr, " [%s]", Options[i].option);
     fprintf(stderr, "\n");
+    fprintf(stderr, "        %s -help\n", argv[0]);
     fprintf(stderr, "        %s -version\n", argv[0]);
-    XtDestroyApplicationContext(xtcontext);
-    exit(1);
+    if (xtcontext != NULL)
+        XtDestroyApplicationContext(xtcontext);
+    exit((argc > 1) ? 1 : 0);
 }
 
 /*
