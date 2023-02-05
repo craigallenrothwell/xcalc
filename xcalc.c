@@ -88,15 +88,13 @@ static unsigned char check_bits[] = {
 /*	command line options specific to the application */
 static XrmOptionDescRec Options[] = {
 {"-rpn",	"rpn",		XrmoptionNoArg,		(XtPointer)"on"},
-{"-stipple",	"stipple",	XrmoptionNoArg,		(XtPointer)"on"},
-{"-version",	"version",	XrmoptionNoArg,		(XtPointer)"on"}
+{"-stipple",	"stipple",	XrmoptionNoArg,		(XtPointer)"on"}
 };
 
 /*	resources specific to the application */
 static struct resources {
     Boolean	rpn;		/* reverse polish notation (HP mode) */
     Boolean	stipple;	/* background stipple */
-    Boolean	version;	/* print version */
     Cursor	cursor;
 } appResources;
 
@@ -106,8 +104,6 @@ static XtResource Resources[] = {
      offset(rpn),	XtRImmediate,	(XtPointer) False},
 {"stipple",	"Stipple",	XtRBoolean,	sizeof(Boolean),
      offset(stipple),	XtRImmediate,	(XtPointer) False},
-{"version",	"Version",	XtRBoolean,	sizeof(Boolean),
-     offset(version),	XtRImmediate,	(XtPointer) False},
 {"cursor",	"Cursor",	XtRCursor,	sizeof(Cursor),
      offset(cursor),	XtRCursor,	(XtPointer)NULL}
 };
@@ -121,6 +117,19 @@ main(int argc, char **argv)
 
     XtSetLanguageProc(NULL, (XtLanguageProc) NULL, NULL);
 
+    /* Handle args that don't require opening a display */
+    for (int n = 1; n < argc; n++) {
+	const char *argn = argv[n];
+	/* accept single or double dash for -version */
+	if (argn[0] == '-' && argn[1] == '-') {
+	    argn++;
+	}
+	if (strcmp(argn, "-version") == 0) {
+	    puts(PACKAGE_STRING);
+	    exit(0);
+	}
+    }
+
     toplevel = XtAppInitialize(&xtcontext, "XCalc", Options, XtNumber(Options),
 			       &argc, argv, NULL, NULL, 0);
     if (argc != 1) Syntax(argc, argv);
@@ -130,12 +139,6 @@ main(int argc, char **argv)
 
     XtGetApplicationResources(toplevel, (XtPointer)&appResources, Resources,
 			      XtNumber(Resources), (ArgList) NULL, ZERO);
-
-    if (appResources.version)
-    {
-        puts(PACKAGE_STRING);
-        exit(0);
-    }
 
     create_calculator(toplevel);
 
@@ -330,6 +333,7 @@ static void Syntax(int argc, char **argv)
     for (Cardinal i = 0; i < XtNumber(Options); i++)
 	(void) fprintf(stderr, " [%s]", Options[i].option);
     (void) fprintf(stderr, "\n");
+    (void) fprintf(stderr, "        %s -version\n", argv[0]);
     XtDestroyApplicationContext(xtcontext);
     exit(1);
 }
