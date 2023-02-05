@@ -151,7 +151,7 @@ main(int argc, char **argv)
 
     dpy = XtDisplay(toplevel);
     wm_delete_window = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
-    (void) XSetWMProtocols(dpy, XtWindow(toplevel), &wm_delete_window, 1);
+    XSetWMProtocols(dpy, XtWindow(toplevel), &wm_delete_window, 1);
     XDefineCursor(dpy, XtWindow(toplevel), appResources.cursor);
 
     if (appResources.stipple || (CellsOfScreen(XtScreen(toplevel)) <= 2))
@@ -325,15 +325,15 @@ void Quit(void)
  */
 static void Syntax(int argc, char **argv)
 {
-    (void) fprintf(stderr, "%s: unknown options:", argv[0]);
+    fprintf(stderr, "%s: unknown options:", argv[0]);
     for (int i = 1; i <argc; i++)
-	(void) fprintf(stderr, " %s", argv[i]);
-    (void) fprintf(stderr, "\n\n");
-    (void) fprintf(stderr, "Usage:  %s", argv[0]);
+	fprintf(stderr, " %s", argv[i]);
+    fprintf(stderr, "\n\n");
+    fprintf(stderr, "Usage:  %s", argv[0]);
     for (Cardinal i = 0; i < XtNumber(Options); i++)
-	(void) fprintf(stderr, " [%s]", Options[i].option);
-    (void) fprintf(stderr, "\n");
-    (void) fprintf(stderr, "        %s -version\n", argv[0]);
+	fprintf(stderr, " [%s]", Options[i].option);
+    fprintf(stderr, "\n");
+    fprintf(stderr, "        %s -version\n", argv[0]);
     XtDestroyApplicationContext(xtcontext);
     exit(1);
 }
